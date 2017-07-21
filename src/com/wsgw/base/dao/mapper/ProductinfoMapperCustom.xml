@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wsgw.base.dao.mapper.ProductinfoMapperCustom" >
+	<select id="findByCreateTime" resultType="com.wsgw.base.pojo.vo.ProductinfoCustom" parameterType="com.wsgw.base.utils.PageModel">
+		select p.id as id,name,description,createTime,baseprice,marketprice,sellprice,sexrequest,commend,clickcount,sellCount,categoryId,uploadFile,path
+		from productinfo p 
+		inner join uploadfile u 
+		on p.uploadFile = u.id
+		ORDER BY p.createTime DESC
+		limit #{pageModel.startIndex},#{pageModel.size};
+	</select>
+	<select id="findBySellCount" resultType="com.wsgw.base.pojo.vo.ProductinfoCustom" parameterType="com.wsgw.base.utils.PageModel">
+		select p.id as id,name,description,createTime,baseprice,marketprice,sellprice,sexrequest,commend,clickcount,sellCount,categoryId,uploadFile,path
+		from productinfo p 
+		inner join uploadfile u 
+		on p.uploadFile = u.id
+		ORDER BY p.sellCount DESC
+		limit #{pageModel.startIndex},#{pageModel.size};
+	</select>
+	<select id="findCommend" resultType="com.wsgw.base.pojo.vo.ProductinfoCustom" parameterType="com.wsgw.base.utils.PageModel">
+		select p.id as id,name,description,createTime,baseprice,marketprice,sellprice,sexrequest,commend,clickcount,sellCount,categoryId,uploadFile,path
+		from productinfo p 
+		inner join uploadfile u 
+		on p.uploadFile = u.id and p.commend = 1
+		ORDER BY p.sellCount DESC
+		limit #{pageModel.startIndex},#{pageModel.size};
+	</select>
+	<select id="findEnjoyProduct" resultType="com.wsgw.base.pojo.vo.ProductinfoCustom" parameterType="com.wsgw.base.utils.PageModel">
+		select p.id as id,name,description,createTime,baseprice,marketprice,sellprice,sexrequest,commend,clickcount,sellCount,categoryId,uploadFile,path
+		from productinfo p 
+		inner join uploadfile u 
+		on p.uploadFile = u.id and p.commend = 1
+		ORDER BY p.clickcount DESC
+		limit #{pageModel.startIndex},#{pageModel.size};
+	</select>
+	<select id="findByName" parameterType="String" resultType="com.wsgw.base.pojo.vo.ProductinfoCustom">
+		select p.id as id,name,description,createTime,baseprice,marketprice,sellprice,sexrequest,commend,clickcount,sellCount,categoryId,uploadFile,path
+		from productinfo p 
+		inner join uploadfile u 
+		on p.uploadFile = u.id
+		where 1 = 1 
+		<if test="name!=null"> and name like concat(concat('%',#{name}),'%');</if>
+	</select>
+	<select id="findById" parameterType="Integer" resultType="com.wsgw.base.pojo.vo.ProductinfoCustom">
+		select p.id as id,name,description,createTime,baseprice,marketprice,sellprice,sexrequest,commend,clickcount,sellCount,categoryId,uploadFile,path
+		from productinfo p 
+		inner join uploadfile u 
+		on p.uploadFile = u.id
+		where p.id = #{id};
+	</select>
+	<select id="productList" resultType="com.wsgw.base.pojo.vo.ProductinfoCustom">
+		select p.id as id, p.name as name,description,createTime,baseprice,marketprice,sellprice,sexrequest,commend,categoryId,clickcount,sellCount,uploadFile,pc.name as pname
+		from productinfo p 
+		inner join productcategory pc 
+		on pc.id = p.categoryId
+	</select>
+	<select id="max" resultType="int">
+		select max(id) from productinfo;
+	</select>
+	<select id="count" resultType="Integer">
+		select count(*) from productinfo;
+	</select>
+</mapper>

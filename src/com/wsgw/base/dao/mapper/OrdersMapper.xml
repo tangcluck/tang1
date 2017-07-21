@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wsgw.base.dao.mapper.OrdersMapper" >
+  <resultMap id="BaseResultMap" type="com.wsgw.base.pojo.Orders" >
+    <id column="orderId" property="orderid" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="totalPrice" property="totalprice" jdbcType="REAL" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="paymentWay" property="paymentway" jdbcType="VARCHAR" />
+    <result column="orderState" property="orderstate" jdbcType="VARCHAR" />
+    <result column="customerId" property="customerid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    orderId, name, address, mobile, totalPrice, createTime, paymentWay, orderState, customerId
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wsgw.base.pojo.OrdersExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from orders
+    where orderId = #{orderid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from orders
+    where orderId = #{orderid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wsgw.base.pojo.OrdersExample" >
+    delete from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wsgw.base.pojo.Orders" >
+    insert into orders (orderId, name, address, 
+      mobile, totalPrice, createTime, 
+      paymentWay, orderState, customerId
+      )
+    values (#{orderid,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{totalprice,jdbcType=REAL}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{paymentway,jdbcType=VARCHAR}, #{orderstate,jdbcType=VARCHAR}, #{customerid,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wsgw.base.pojo.Orders" >
+    insert into orders
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        orderId,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="totalprice != null" >
+        totalPrice,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="paymentway != null" >
+        paymentWay,
+      </if>
+      <if test="orderstate != null" >
+        orderState,
+      </if>
+      <if test="customerid != null" >
+        customerId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        #{orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="totalprice != null" >
+        #{totalprice,jdbcType=REAL},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paymentway != null" >
+        #{paymentway,jdbcType=VARCHAR},
+      </if>
+      <if test="orderstate != null" >
+        #{orderstate,jdbcType=VARCHAR},
+      </if>
+      <if test="customerid != null" >
+        #{customerid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wsgw.base.pojo.OrdersExample" resultType="java.lang.Integer" >
+    select count(*) from orders
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orders
+    <set >
+      <if test="record.orderid != null" >
+        orderId = #{record.orderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null" >
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalprice != null" >
+        totalPrice = #{record.totalprice,jdbcType=REAL},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.paymentway != null" >
+        paymentWay = #{record.paymentway,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderstate != null" >
+        orderState = #{record.orderstate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerid != null" >
+        customerId = #{record.customerid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orders
+    set orderId = #{record.orderid,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      totalPrice = #{record.totalprice,jdbcType=REAL},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      paymentWay = #{record.paymentway,jdbcType=VARCHAR},
+      orderState = #{record.orderstate,jdbcType=VARCHAR},
+      customerId = #{record.customerid,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wsgw.base.pojo.Orders" >
+    update orders
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="totalprice != null" >
+        totalPrice = #{totalprice,jdbcType=REAL},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="paymentway != null" >
+        paymentWay = #{paymentway,jdbcType=VARCHAR},
+      </if>
+      <if test="orderstate != null" >
+        orderState = #{orderstate,jdbcType=VARCHAR},
+      </if>
+      <if test="customerid != null" >
+        customerId = #{customerid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where orderId = #{orderid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wsgw.base.pojo.Orders" >
+    update orders
+    set name = #{name,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      totalPrice = #{totalprice,jdbcType=REAL},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      paymentWay = #{paymentway,jdbcType=VARCHAR},
+      orderState = #{orderstate,jdbcType=VARCHAR},
+      customerId = #{customerid,jdbcType=VARCHAR}
+    where orderId = #{orderid,jdbcType=VARCHAR}
+  </update>
+</mapper>

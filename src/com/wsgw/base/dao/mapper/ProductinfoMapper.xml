@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wsgw.base.dao.mapper.ProductinfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wsgw.base.pojo.Productinfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="VARCHAR" />
+    <result column="baseprice" property="baseprice" jdbcType="REAL" />
+    <result column="marketprice" property="marketprice" jdbcType="REAL" />
+    <result column="sellprice" property="sellprice" jdbcType="REAL" />
+    <result column="sexrequest" property="sexrequest" jdbcType="VARCHAR" />
+    <result column="commend" property="commend" jdbcType="BIT" />
+    <result column="clickcount" property="clickcount" jdbcType="INTEGER" />
+    <result column="sellCount" property="sellcount" jdbcType="INTEGER" />
+    <result column="categoryId" property="categoryid" jdbcType="INTEGER" />
+    <result column="uploadFile" property="uploadfile" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wsgw.base.pojo.Productinfo" extends="BaseResultMap" >
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, createTime, baseprice, marketprice, sellprice, sexrequest, commend, clickcount, 
+    sellCount, categoryId, uploadFile
+  </sql>
+  <sql id="Blob_Column_List" >
+    description
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.wsgw.base.pojo.ProductinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from productinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.wsgw.base.pojo.ProductinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from productinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from productinfo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from productinfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.wsgw.base.pojo.ProductinfoExample" >
+    delete from productinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.wsgw.base.pojo.Productinfo" >
+    insert into productinfo (id, name, createTime, 
+      baseprice, marketprice, sellprice, 
+      sexrequest, commend, clickcount, 
+      sellCount, categoryId, uploadFile, 
+      description)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{baseprice,jdbcType=REAL}, #{marketprice,jdbcType=REAL}, #{sellprice,jdbcType=REAL}, 
+      #{sexrequest,jdbcType=VARCHAR}, #{commend,jdbcType=BIT}, #{clickcount,jdbcType=INTEGER}, 
+      #{sellcount,jdbcType=INTEGER}, #{categoryid,jdbcType=INTEGER}, #{uploadfile,jdbcType=INTEGER}, 
+      #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wsgw.base.pojo.Productinfo" >
+    insert into productinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="baseprice != null" >
+        baseprice,
+      </if>
+      <if test="marketprice != null" >
+        marketprice,
+      </if>
+      <if test="sellprice != null" >
+        sellprice,
+      </if>
+      <if test="sexrequest != null" >
+        sexrequest,
+      </if>
+      <if test="commend != null" >
+        commend,
+      </if>
+      <if test="clickcount != null" >
+        clickcount,
+      </if>
+      <if test="sellcount != null" >
+        sellCount,
+      </if>
+      <if test="categoryid != null" >
+        categoryId,
+      </if>
+      <if test="uploadfile != null" >
+        uploadFile,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="baseprice != null" >
+        #{baseprice,jdbcType=REAL},
+      </if>
+      <if test="marketprice != null" >
+        #{marketprice,jdbcType=REAL},
+      </if>
+      <if test="sellprice != null" >
+        #{sellprice,jdbcType=REAL},
+      </if>
+      <if test="sexrequest != null" >
+        #{sexrequest,jdbcType=VARCHAR},
+      </if>
+      <if test="commend != null" >
+        #{commend,jdbcType=BIT},
+      </if>
+      <if test="clickcount != null" >
+        #{clickcount,jdbcType=INTEGER},
+      </if>
+      <if test="sellcount != null" >
+        #{sellcount,jdbcType=INTEGER},
+      </if>
+      <if test="categoryid != null" >
+        #{categoryid,jdbcType=INTEGER},
+      </if>
+      <if test="uploadfile != null" >
+        #{uploadfile,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.wsgw.base.pojo.ProductinfoExample" resultType="java.lang.Integer" >
+    select count(*) from productinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update productinfo
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.baseprice != null" >
+        baseprice = #{record.baseprice,jdbcType=REAL},
+      </if>
+      <if test="record.marketprice != null" >
+        marketprice = #{record.marketprice,jdbcType=REAL},
+      </if>
+      <if test="record.sellprice != null" >
+        sellprice = #{record.sellprice,jdbcType=REAL},
+      </if>
+      <if test="record.sexrequest != null" >
+        sexrequest = #{record.sexrequest,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commend != null" >
+        commend = #{record.commend,jdbcType=BIT},
+      </if>
+      <if test="record.clickcount != null" >
+        clickcount = #{record.clickcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.sellcount != null" >
+        sellCount = #{record.sellcount,jdbcType=INTEGER},
+      </if>
+      <if test="record.categoryid != null" >
+        categoryId = #{record.categoryid,jdbcType=INTEGER},
+      </if>
+      <if test="record.uploadfile != null" >
+        uploadFile = #{record.uploadfile,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update productinfo
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      baseprice = #{record.baseprice,jdbcType=REAL},
+      marketprice = #{record.marketprice,jdbcType=REAL},
+      sellprice = #{record.sellprice,jdbcType=REAL},
+      sexrequest = #{record.sexrequest,jdbcType=VARCHAR},
+      commend = #{record.commend,jdbcType=BIT},
+      clickcount = #{record.clickcount,jdbcType=INTEGER},
+      sellCount = #{record.sellcount,jdbcType=INTEGER},
+      categoryId = #{record.categoryid,jdbcType=INTEGER},
+      uploadFile = #{record.uploadfile,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update productinfo
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      baseprice = #{record.baseprice,jdbcType=REAL},
+      marketprice = #{record.marketprice,jdbcType=REAL},
+      sellprice = #{record.sellprice,jdbcType=REAL},
+      sexrequest = #{record.sexrequest,jdbcType=VARCHAR},
+      commend = #{record.commend,jdbcType=BIT},
+      clickcount = #{record.clickcount,jdbcType=INTEGER},
+      sellCount = #{record.sellcount,jdbcType=INTEGER},
+      categoryId = #{record.categoryid,jdbcType=INTEGER},
+      uploadFile = #{record.uploadfile,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wsgw.base.pojo.Productinfo" >
+    update productinfo
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="baseprice != null" >
+        baseprice = #{baseprice,jdbcType=REAL},
+      </if>
+      <if test="marketprice != null" >
+        marketprice = #{marketprice,jdbcType=REAL},
+      </if>
+      <if test="sellprice != null" >
+        sellprice = #{sellprice,jdbcType=REAL},
+      </if>
+      <if test="sexrequest != null" >
+        sexrequest = #{sexrequest,jdbcType=VARCHAR},
+      </if>
+      <if test="commend != null" >
+        commend = #{commend,jdbcType=BIT},
+      </if>
+      <if test="clickcount != null" >
+        clickcount = #{clickcount,jdbcType=INTEGER},
+      </if>
+      <if test="sellcount != null" >
+        sellCount = #{sellcount,jdbcType=INTEGER},
+      </if>
+      <if test="categoryid != null" >
+        categoryId = #{categoryid,jdbcType=INTEGER},
+      </if>
+      <if test="uploadfile != null" >
+        uploadFile = #{uploadfile,jdbcType=INTEGER},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wsgw.base.pojo.Productinfo" >
+    update productinfo
+    set name = #{name,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      baseprice = #{baseprice,jdbcType=REAL},
+      marketprice = #{marketprice,jdbcType=REAL},
+      sellprice = #{sellprice,jdbcType=REAL},
+      sexrequest = #{sexrequest,jdbcType=VARCHAR},
+      commend = #{commend,jdbcType=BIT},
+      clickcount = #{clickcount,jdbcType=INTEGER},
+      sellCount = #{sellcount,jdbcType=INTEGER},
+      categoryId = #{categoryid,jdbcType=INTEGER},
+      uploadFile = #{uploadfile,jdbcType=INTEGER},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wsgw.base.pojo.Productinfo" >
+    update productinfo
+    set name = #{name,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      baseprice = #{baseprice,jdbcType=REAL},
+      marketprice = #{marketprice,jdbcType=REAL},
+      sellprice = #{sellprice,jdbcType=REAL},
+      sexrequest = #{sexrequest,jdbcType=VARCHAR},
+      commend = #{commend,jdbcType=BIT},
+      clickcount = #{clickcount,jdbcType=INTEGER},
+      sellCount = #{sellcount,jdbcType=INTEGER},
+      categoryId = #{categoryid,jdbcType=INTEGER},
+      uploadFile = #{uploadfile,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

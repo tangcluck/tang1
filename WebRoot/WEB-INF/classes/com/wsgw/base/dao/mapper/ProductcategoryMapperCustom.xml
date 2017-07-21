@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wsgw.base.dao.mapper.ProductcategoryMapperCustom" >
+	<select id="findCategory" parameterType="Integer" resultType="com.wsgw.base.pojo.vo.ProductcategoryCustom">
+		select id,name,level,(select count(1) from productcategory p where p.pid=pc.id) as child
+		<if test="pid!=null">,
+		(select name from productcategory p where p.id = #{pid} ) as parent</if>
+		from productcategory pc
+		 where 1=1
+			<if test="pid==null">and pc.level = 1; </if>
+			<if test="pid!=null">and pc.pid = #{pid};</if>
+	</select>
+	<select id="maxId" resultType="Integer">
+		select Max(id) from productcategory;
+	</select>
+	<select id="findAllCategory" resultType="com.wsgw.base.pojo.vo.ProductcategoryCustom">
+		select * from productcategory;
+	</select>
+</mapper>

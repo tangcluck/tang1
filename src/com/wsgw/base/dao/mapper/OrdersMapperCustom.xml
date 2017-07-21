@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wsgw.base.dao.mapper.OrdersMapperCustom" >
+	<select id="findOrderByCustomer" parameterType="String" resultType="com.wsgw.base.pojo.Orders">
+		select * from orders where customerId = #{customerId} order by createTime desc;
+	</select>
+	
+	<select id="findAllOrders" parameterType="com.wsgw.base.pojo.vo.OrderQueryVO" resultType="com.wsgw.base.pojo.Orders">
+		select * from orders
+		where 1=1
+		<if test="orderid!=null and orderid!=''">and orderId=#{orderid} </if>
+		<if test="orderstate!=null and orderstate!=''">and orderState=#{orderstate} </if>
+		<if test="username!=null and username!=''">and name=#{username} </if>
+		order by createTime desc;
+	</select>
+</mapper>
